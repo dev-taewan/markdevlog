@@ -1,0 +1,245 @@
+body {
+  background-color: #f4f7f9;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  color: #333;
+  margin: 0;
+  padding: 20px;
+}
+
+.App {
+  max-width: 1920px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+h4 {
+  font-size: 1.5em;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  color: #34495e;
+}
+
+
+/* --- 헤더 --- */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #e9ecef;
+  padding-bottom: 15px;
+  margin-bottom: 25px;
+  flex-wrap: wrap; /* 창이 좁아지면 줄바꿈 */
+}
+
+.date-selector {
+  font-size: 1.8em;
+  font-weight: bold;
+  color: #2c3e50;
+  padding-bottom: 15px;
+}
+
+.date-selector input[type="date"] {
+  margin-left: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px;
+  font-size: 0.8em;
+}
+
+/* === 버튼 그룹 컨테이너 스타일 (수정) === */
+.action-buttons-container {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* 기능 버튼과 언어 버튼 사이 간격 */
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
+/* === 언어 선택기 스타일 (수정) === */
+.language-switcher button {
+  font-size: 12px;
+  padding: 5px 10px;
+  background-color: #f8f9fa;
+  color: #495057;
+  border: 1px solid #dee2e6;
+  margin-left: -1px; /* 버튼 테두리 겹침 */
+}
+.language-switcher button:first-child {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  margin-left: 0;
+}
+.language-switcher button:last-child {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.language-switcher button.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+  z-index: 1;
+}
+
+/* --- 테이블 스타일 (이전과 동일) --- */
+.task-table-wrapper {
+  overflow-x: auto;
+}
+.task-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  table-layout: fixed;
+}
+.task-table th, .task-table td {
+  border: 1px solid #dee2e6;
+  padding: 10px 12px;
+  text-align: center;
+  vertical-align: middle;
+  word-break: break-all;
+}
+.task-table th:nth-child(1) { width: 5%; }
+.task-table th:nth-child(2) { width: 25%; }
+.task-table th:nth-child(3) { width: 10%; }
+.task-table th:nth-child(4) { width: 15%; }
+.task-table th:nth-child(5) { width: 10%; }
+.task-table th:nth-child(6) { width: 10%; }
+.task-table th:nth-child(7) { width: 20%; }
+.task-table th:nth-child(8) { width: 5%; }
+.task-table th { background-color: #f8f9fa; font-weight: 600; }
+.task-table input, .task-table select { width: 95%; padding: 6px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+.progress-cell { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
+.progress-cell input[type="range"] { flex-basis: 100%; }
+.progress-cell span { font-size: 13px; }
+.action-cell button { background: none; border: none; cursor: pointer; font-size: 1.2em; }
+.table-actions { margin-top: 15px; }
+
+/* --- 오늘/다음 업무 스타일 (이전과 동일) --- */
+.worklog-section ul { list-style-type: none; padding-left: 0; }
+.worklog-section li { margin-bottom: 8px; }
+.worklog-item { padding: 5px; border-left: 3px solid transparent; }
+.worklog-item:hover { background-color: #f8f9fa; border-left: 3px solid #007bff; }
+.worklog-item-content { display: flex; align-items: center; gap: 8px; }
+.worklog-item-content .item-text { flex-grow: 1; }
+.worklog-item-content .item-text.is-bold { font-weight: bold; }
+.worklog-item-content input { flex-grow: 1; padding: 4px; border: 1px solid #ddd; border-radius: 3px; }
+.worklog-item-actions button { visibility: hidden; background: none; border: none; cursor: pointer; margin-left: 4px; }
+.worklog-item:hover .worklog-item-actions button { visibility: visible; }
+.worklog-sub-items { padding-left: 25px; margin-top: 8px; }
+.worklog-section-adder { margin-top: 15px; display: flex; gap: 10px; align-items: center; }
+.worklog-section-adder select, .worklog-section-adder button { padding: 8px 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
+
+/* --- 버튼 공통 스타일 --- */
+.button-primary, button { background-color: #007bff; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-size: 14px; transition: background-color 0.2s; }
+.button-primary:hover, button:hover { background-color: #0056b3; }
+.button-secondary { background-color: #6c757d; }
+.button-secondary:hover { background-color: #5a6268; }
+/* === 초기화 버튼을 위한 danger 스타일 추가 === */
+.button-danger { background-color: #dc3545; }
+.button-danger:hover { background-color: #c82333; }
+
+.date-range-picker-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* react-datepicker 커스텀 */
+/* === DatePicker 팝업 및 셀 레이아웃 스타일 === */
+
+/* 1. 셀 내부 레이아웃 (텍스트 + 버튼) */
+.date-picker-cell-layout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 4px;
+}
+
+/* 2. 소요 일수 텍스트 스타일 */
+.duration-text-display {
+  flex-grow: 1;
+  text-align: center;
+  font-size: 14px;
+  color: #333;
+  font-variant-numeric: tabular-nums; /* 숫자 너비 고정 */
+}
+
+/* 3. 달력 팝업을 여는 '편집' 버튼 스타일 */
+.date-picker-trigger-button {
+  flex-shrink: 0;
+  background-color: #e9ecef;
+  color: #495057;
+  border: 1px solid #ced4da;
+  padding: 4px 10px;
+  font-size: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.date-picker-trigger-button:hover {
+  background-color: #dee2e6;
+  border-color: #adb5bd;
+}
+
+
+/* 4. DatePicker 팝업이 다른 요소 위에 오도록 z-index 설정 */
+.react-datepicker-popper {
+  z-index: 10; 
+}
+
+/* 5. DatePicker 캘린더 기본 스타일 */
+.react-datepicker {
+  border: 1px solid #dee2e6;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.react-datepicker__header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+}
+
+/* 6. 날짜 범위 선택 스타일 */
+.react-datepicker__day--in-range {
+  background-color: #dbeafe;
+}
+.react-datepicker__day--in-selecting-range {
+    background-color: #dbeafe;
+}
+.react-datepicker__day--range-start,
+.react-datepicker__day--range-end {
+  background-color: #3b82f6;
+  color: white;
+}
+.react-datepicker__day--range-start:hover,
+.react-datepicker__day--range-end:hover {
+    color: white;
+}
+
+/* 7. 커스텀 날짜 셀 스타일 */
+.custom-day {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+/* 8. 제외된 날짜 스타일 */
+.custom-day.excluded-day {
+  background-color: #fecaca;
+  color: #991b1b;
+  text-decoration: line-through;
+}
+
+.custom-day.excluded-day:hover {
+    background-color: #ef4444;
+    color: white;
+}
