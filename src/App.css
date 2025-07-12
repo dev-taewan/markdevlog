@@ -87,7 +87,7 @@ h4 {
   z-index: 1;
 }
 
-/* --- 테이블 스타일 (이전과 동일) --- */
+/* --- 테이블 스타일 --- */
 .task-table-wrapper {
   overflow-x: auto;
 }
@@ -114,13 +114,28 @@ h4 {
 .task-table th:nth-child(8) { width: 5%; }
 .task-table th { background-color: #f8f9fa; font-weight: 600; }
 .task-table input, .task-table select { width: 95%; padding: 6px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-.progress-cell { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
-.progress-cell input[type="range"] { flex-basis: 100%; }
-.progress-cell span { font-size: 13px; }
+.progress-cell {
+display: flex;
+flex-direction: column; 
+align-items: center;
+justify-content: center;
+gap: 8px;
+}
+.progress-cell input[type="range"] {
+width: 100%;
+}
+.progress-text {
+font-size: 13px;
+width: 100%;
+text-align: center;
+}
+.progress-status {
+color: #6c757d; 
+margin-left: 4px;
+}
 .action-cell button { background: none; border: none; cursor: pointer; font-size: 1.2em; }
 .table-actions { margin-top: 15px; }
 
-/* --- 오늘/다음 업무 스타일 (이전과 동일) --- */
 .worklog-section ul { list-style-type: none; padding-left: 0; }
 .worklog-section li { margin-bottom: 8px; }
 .worklog-item { padding: 5px; border-left: 3px solid transparent; }
@@ -131,7 +146,22 @@ h4 {
 .worklog-item-content input { flex-grow: 1; padding: 4px; border: 1px solid #ddd; border-radius: 3px; }
 .worklog-item-actions button { visibility: hidden; background: none; border: none; cursor: pointer; margin-left: 4px; }
 .worklog-item:hover .worklog-item-actions button { visibility: visible; }
-.worklog-sub-items { padding-left: 25px; margin-top: 8px; }
+/* 하위 업무의 들여쓰기 정도 */
+.worklog-sub-items { 
+position: relative; 
+padding-left: 40px; 
+margin-top: 10px;
+margin-left: 10px;
+}
+.worklog-sub-items::before {
+content: '';
+position: absolute;
+left: 10px; 
+top: 0;
+bottom: 0;
+width: 1px;
+background-color: #e9ecef;
+}
 .worklog-section-adder { margin-top: 15px; display: flex; gap: 10px; align-items: center; }
 .worklog-section-adder select, .worklog-section-adder button { padding: 8px 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
 

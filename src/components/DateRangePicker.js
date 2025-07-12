@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import { ko } from 'date-fns/locale';
 import { format } from 'date-fns';
-import { useTranslation } from 'react-i18next'; // 1. useTranslation 훅 임포트
+import { useTranslation } from 'react-i18next';
 // date-fns 로케일을 react-datepicker에 등록합니다.
 registerLocale('ko', ko);
 /**

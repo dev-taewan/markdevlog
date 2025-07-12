@@ -40,7 +40,10 @@ function TaskList({ tasks, onTaskChange, onAddTask, onDeleteTask }) {
               </td>
               <td className="progress-cell">
                  <input type="range" min="0" max="100" value={task.progress} onChange={(e) => onTaskChange(task.id, 'progress', Number(e.target.value))} />
-                 <span>{task.progress}%</span>
+                 <div className="progress-text">
+                    {task.progress}%
+                      <span className="progress-status">({t(`taskStatuses.${task.status}`)})</span>
+                 </div>
                  <select value={task.status} onChange={(e) => onTaskChange(task.id, 'status', e.target.value)}>
                     {taskStatusKeys.map(key => <option key={key} value={key}>{t(`taskStatuses.${key}`)}</option>)}
                  </select>

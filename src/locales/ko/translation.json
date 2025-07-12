@@ -1,5 +1,6 @@
 {
-    "issueTile":"이슈",
+  "appLanguage": "ko",
+  "issueTile":"이슈",
   "issueDescription":"이슈 내용",
   "scheduleEditBtn":"편집",
   "workDuration":"일",
@@ -24,7 +25,8 @@
   "addTask": "업무 추가",
   "addIssue": "이슈 추가",
   "resetData": "초기화",
-  "confirmDeleteWorkList": "이 업무를 정말 삭제하시겠습니까?",
+  "resetConfirmWarning":"정말로 모든 데이터를 초기화하시겠습니까? 이 작업은 되돌릴 수 없습니다.",
+  "confirmDeleteWorkList": "이 항목과 모든 하위 항목을 삭제하시겠습니까?",
   "confirmDelete": "이 업무를 정말 삭제하시겠습니까?",
   "selectFromList": "업무 리스트에서 선택...",
   "taskTypes": {

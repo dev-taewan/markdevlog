@@ -1,32 +1,39 @@
 import { format, differenceInDays } from 'date-fns';
-import { ko } from 'date-fns/locale';
+import { ko, enUS } from 'date-fns/locale';
 
-// 날짜 포맷 함수: YYYY-MM-DD (요일)
-const formatDateWithDay = (date) => {
-  return format(new Date(date), 'yyyy-MM-dd (eee)', { locale: ko });
+// 실제 업무일을 계산하는 함수
+const calculateWorkingDays = (start, end, excluded = []) => {
+  if (!start || !end) return 0;
+  let count = 0;
+  const startDate = new Date(start);
+  const endDate = new Date(end);
+  for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+    const currentDateStr = format(d, 'yyyy-MM-dd');
+    if (!excluded.includes(currentDateStr)) {
+      count++;
+    }
+  }
+  return count;
 };
 
-// 기간 계산 및 포맷 함수: MM.DD-MM.DD(N일)
-const formatDuration = (start, end) => {
-  if (!start) return '';
-  const startDate = new Date(start);
-  if (!end || start === end) {
-    return `${format(startDate, 'MM.dd')}(1)`;
-  }
-  const endDate = new Date(end);
-  const days = differenceInDays(endDate, startDate) + 1;
-  return `${format(startDate, 'MM.dd')}-${format(endDate, 'MM.dd')}(${days})`;
+
+// 날짜 포맷 함수: YYYY-MM-DD (요일)
+const formatDateWithDay = (date, locale) => {
+  return format(new Date(date), 'yyyy-MM-dd (eee)', { locale });
 };
 
 // 오늘/다음 업무 목록을 재귀적으로 렌더링하는 함수
 const renderWorkItemsMarkdown = (items, depth = 0) => {
   let md = '';
-  const indent = '    '.repeat(depth); // 4칸 들여쓰기
+  const indent = '    '.repeat(depth);
 
   items.forEach(item => {
-    // 이슈와 일반 업무 제목 모두 굵게 처리
-    const title = `**${item.content.replace(/(\⚠️ 이슈)\[(.*)\]/, '$1[$2]')}**`;
-    md += `${indent}* ${title}\n`;
+    // 최상위 업무와 이슈만 굵게 처리
+    const isTopLevel = depth === 0;
+    const isIssue = item.content.startsWith('⚠️');
+    const content = (isTopLevel || isIssue) ? `**${item.content}**` : item.content;
+    
+    md += `${indent}* ${content}\n`;
     if (item.subItems && item.subItems.length > 0) {
       md += renderWorkItemsMarkdown(item.subItems, depth + 1);
     }
@@ -34,30 +41,42 @@ const renderWorkItemsMarkdown = (items, depth = 0) => {
   return md;
 };
 
-// 메인 마크다운 생성 함수
-export const generateMarkdown = (log) => {
-  // 1. 날짜
-  let md = `📅 ${formatDateWithDay(log.date)}\n\n`;
+// === 메인 마크다운 생성 함수 (수정됨) ===
+export const generateMarkdown = (log, t) => {
+  // 현재 언어에 맞는 date-fns 로케일을 선택
+  const dateLocale = t('appLanguage') === 'ko' ? ko : enUS;
 
-  // 2. 업무 리스트
-  md += `#### **⏳업무 리스트**\n`;
-  md += `| 번호 | 업무 | 종류 | 기한 | 진행률 | 결과물 | 특이사항 |\n`;
+  // 1. 날짜
+  let md = `📅 ${formatDateWithDay(log.date, dateLocale)}\n\n`;
+
+  // 2. 업무 리스트 (헤더부터 번역)
+  md += `#### **${t('taskListTitle')}**\n`;
+  md += `| ${t('headerNumber')} | ${t('headerTask')} | ${t('headerType')} | ${t('headerDueDate')} | ${t('headerProgress')} | ${t('headerResult')} | ${t('headerNotes')} |\n`;
   md += `|:---:|:---|:---|:---|:---|:---|:---|\n`;
   log.tasks.forEach((task, index) => {
-    const duration = formatDuration(task.startDate, task.endDate);
-    const progress = `${task.progress}%${task.status}`;
-    const result = task.resultLink ? `[링크](${task.resultLink})` : '-';
-    md += `| ${index + 1} | ${task.name} | ${task.type} | ${duration} | ${progress} | ${result} | ${task.notes || ''} |\n`;
+    // === 핵심 수정: 키 값을 번역 함수 t()로 변환 ===
+    const taskType = t(`taskTypes.${task.type}`);
+    const status = t(`taskStatuses.${task.status}`);
+    const progress = `${task.progress}%  (${status})`;
+    
+    const workingDays = calculateWorkingDays(task.startDate, task.endDate, task.excludedDates);
+    const duration = task.startDate && task.endDate
+      ? `${format(new Date(task.startDate), 'MM.dd')}-${format(new Date(task.endDate), 'MM.dd')} (${workingDays}일)`
+      : '-';
+    
+    const result = task.resultLink ? `[Link](${task.resultLink})` : '-';
+    
+    md += `| ${index + 1} | ${task.name} | ${taskType} | ${duration} | ${progress} | ${result} | ${task.notes || ''} |\n`;
   });
   md += '\n';
 
   // 3. 오늘 진행 업무
-  md += `#### **✅ 오늘 진행 업무:**\n`;
+  md += `#### **${t('todayWorkTitle')}**\n`;
   md += renderWorkItemsMarkdown(log.todayWork);
   md += '\n';
 
   // 4. 다음 진행할 업무
-  md += `#### **☑️ 다음 진행할 업무:**\n`;
+  md += `#### **${t('nextWorkTitle')}**\n`;
   md += renderWorkItemsMarkdown(log.nextWork);
 
   return md;
