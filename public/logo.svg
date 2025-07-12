@@ -61,7 +61,7 @@
     <!-- 서브타이틀 -->
     <text x="0" y="115" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" 
           font-size="14" fill="rgba(255,255,255,0.8)" font-weight="400">
-      Smart Markdown Workflow Logger
+      Log it once. Use it everywhere.
     </text>
     
     <!-- 태그라인 -->
@@ -69,7 +69,7 @@
       <rect x="0" y="0" width="200" height="1" fill="rgba(255,255,255,0.2)"/>
       <text x="0" y="20" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" 
             font-size="11" fill="rgba(255,255,255,0.6)" font-weight="400">
-        업무 일지를 마크다운으로 쉽고 빠르게
+        Markdown-ready for any tool.
       </text>
     </g>
   </g>
